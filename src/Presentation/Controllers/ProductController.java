@@ -6,6 +6,8 @@ import dao.CategoryDaoImpl;
 import dao.ProductDaoImpl;
 import dao.entities.Category;
 import dao.entities.Product;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -26,6 +28,7 @@ public class ProductController implements Initializable {
     @FXML private TextField TextPrix;
     @FXML private ComboBox<Category> ComboCategory;
     @FXML private ListView<Product> listViewProt ;
+    @FXML private TextField textSearch;
     private CatalogueService catalogueService;
     ObservableList<Product> data = FXCollections.observableArrayList();
     @Override
@@ -33,9 +36,35 @@ public class ProductController implements Initializable {
         listViewProt.setItems(data);
         catalogueService = new CatalogueServiceImpl(new ProductDaoImpl(),new CategoryDaoImpl());
         loadData();
+        textSearch.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                data.clear();
+                data.addAll(catalogueService.searchProductByQuery(newValue));
+
+            }
+        });
     }
     private void loadData(){
+        data.clear();
         data.addAll(catalogueService.getAllProduct());
         ComboCategory.getItems().addAll(catalogueService.getAllCategory());
     }
+
+    public void addProduct(){
+        Product product = new Product();
+        product.setName(TextNom.getText());
+        product.setReference(TextRef.getText());
+        product.setPrix(Float.parseFloat(TextPrix.getText()));
+        product.setCategory(ComboCategory.getSelectionModel().getSelectedItem());
+        catalogueService.addProduct(product);
+        loadData();
+    }
+
+    public void deleteProduct(){
+        Product product = listViewProt.getSelectionModel().getSelectedItem();
+        catalogueService.deleteProduct(product);
+        loadData();
+    }
+
 }

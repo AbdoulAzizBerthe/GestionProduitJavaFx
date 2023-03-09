@@ -103,10 +103,11 @@ public class ProductDaoImpl implements ProductDao {
         List<Product> products = new ArrayList<>();
         Connection connection = ConnexionDBSingleton.getConnection();
         try {
-            PreparedStatement pstm = connection.prepareStatement("select * from product where NAME like ? or REFERENCE like ? or PRIX like ?");
+            PreparedStatement pstm = connection.prepareStatement(
+                    "select * from product where NAME like ? or REFERENCE like ? or PRIX like ?");
             pstm.setString(1,"%"+query+"%");
-            pstm.setString(1,"%"+query+"%");
-            pstm.setString(1,"%"+query+"%");
+            pstm.setString(2,"%"+query+"%");
+            pstm.setString(3,"%"+query+"%");
             ResultSet resultSet = pstm.executeQuery();
             while (resultSet.next()){
                 Product p = new Product();

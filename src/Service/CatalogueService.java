@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface CatalogueService {
     List<Product> getAllProduct();
+    List<Product> searchProductByQuery(String query);
     void addProduct(Product p);
     void updateProduct(Product p);
     void deleteProduct(Product p);

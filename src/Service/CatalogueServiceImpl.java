@@ -23,6 +23,11 @@ public class CatalogueServiceImpl implements CatalogueService{
     }
 
     @Override
+    public List<Product> searchProductByQuery(String query) {
+        return productDao.findbyQuery(query);
+    }
+
+    @Override
     public void addProduct(Product p) {
         productDao.save(p);
     }

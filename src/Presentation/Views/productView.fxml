@@ -43,10 +43,10 @@
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Label text="Recherche" />
-                  <TextField />
-                  <Button mnemonicParsing="false" text="Ajouter" />
+                  <TextField fx:id="textSearch" />
+                  <Button onAction="#addProduct" mnemonicParsing="false" text="Ajouter" />
                   <Button mnemonicParsing="false" text="Modifier" />
-                  <Button mnemonicParsing="false" text="Supprimer" />
+                  <Button onAction="#deleteProduct" mnemonicParsing="false" text="Supprimer" />
                </children>
             </HBox>
          </children>
